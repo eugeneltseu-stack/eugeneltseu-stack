@@ -54,7 +54,7 @@
             </div>
 
             <div class="request-container">
-                <form id="photo-request-form" class="request-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data">
+                <form id="photo-request-form" class="request-form">
                     <div class="form-section">
                         <h3>Photo Upload</h3>
                         <div class="form-group">
@@ -134,15 +134,16 @@
                 <!-- Success Message -->
                 <div id="success-message" class="success-message" style="display: none;">
                     <div class="success-icon">✅</div>
-                    <h3>Request Submitted Successfully!</h3>
-                    <p>Thank you for your submission. We'll review your request and send you a payment link via email within 24 hours.</p>
+                    <h3>AI Photo Edit Request Submitted!</h3>
+                    <p>Thank you for your submission. Your request has been received and will be processed with our Qwen3 AI technology.</p>
                     <p><strong>What happens next:</strong></p>
                     <ol>
-                        <li>We'll review your photo and instructions</li>
-                        <li>If approved, you'll receive a Stripe payment link</li>
-                        <li>After payment, we'll edit your photo</li>
-                        <li>You'll receive the edited photo within 24-48 hours</li>
+                        <li>We'll review your photo and instructions for quality and content policy compliance</li>
+                        <li>If approved, you'll receive a Stripe payment link via email within 24 hours</li>
+                        <li>After payment, our Qwen3 AI will process your photo with the requested edits</li>
+                        <li>You'll receive your AI-enhanced photo within 24-48 hours</li>
                     </ol>
+                    <p><strong>📧 Check your email for the payment link and further instructions.</strong></p>
                     <button onclick="submitAnother()" class="secondary-button">Submit Another Request</button>
                 </div>
             </div>
