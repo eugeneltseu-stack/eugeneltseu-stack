@@ -37,38 +37,27 @@ async function verifyAdminCredentials(username, password) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Admin panel loaded');
-    
-    // FOR TESTING: Uncomment the next line to reset admin credentials
-    // localStorage.removeItem('adminCredentials'); localStorage.removeItem('adminLoggedIn');
-    
     // Setup form handling
     const setupForm = document.getElementById('setup-form');
     if (setupForm) {
         setupForm.addEventListener('submit', handleSetup);
-        console.log('Setup form listener added');
     }
 
     // Login form handling
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', handleLogin);
-        console.log('Login form listener added');
     }
 
     // Check if admin credentials exist
     if (!adminCredentialsExist()) {
-        console.log('No admin credentials found, showing setup screen');
         // Show setup screen for first-time setup
         showSetupScreen();
     } else {
-        console.log('Admin credentials exist');
         // Check if already logged in
         if (localStorage.getItem('adminLoggedIn') === 'true') {
-            console.log('Already logged in, showing admin panel');
             showAdminPanel();
         } else {
-            console.log('Not logged in, showing login screen');
             showLoginScreen();
         }
     }
@@ -93,7 +82,6 @@ function showLoginScreen() {
 }
 
 async function handleSetup(e) {
-    console.log('Setup form submitted');
     e.preventDefault();
     
     const username = document.getElementById('setup-username').value.trim();
@@ -101,42 +89,34 @@ async function handleSetup(e) {
     const confirmPassword = document.getElementById('setup-password-confirm').value;
     const errorDiv = document.getElementById('setup-error');
     
-    console.log('Setup data:', { username: username, passwordLength: password.length });
-    
     // Clear previous errors
     errorDiv.style.display = 'none';
     
     // Validation
     if (username.length < 3) {
-        console.log('Username too short');
         errorDiv.textContent = 'Username must be at least 3 characters long.';
         errorDiv.style.display = 'block';
         return;
     }
     
     if (password.length < 6) {
-        console.log('Password too short');
         errorDiv.textContent = 'Password must be at least 6 characters long.';
         errorDiv.style.display = 'block';
         return;
     }
     
     if (password !== confirmPassword) {
-        console.log('Passwords do not match');
         errorDiv.textContent = 'Passwords do not match.';
         errorDiv.style.display = 'block';
         return;
     }
     
     try {
-        console.log('Storing admin credentials...');
         // Store credentials securely
         await storeAdminCredentials(username, password);
-        console.log('Credentials stored successfully');
         
         // Auto-login after setup
         localStorage.setItem('adminLoggedIn', 'true');
-        console.log('Auto-login set');
         
         // Clear form
         document.getElementById('setup-form').reset();
@@ -146,11 +126,9 @@ async function handleSetup(e) {
         alert('✅ Admin account created successfully! You are now logged in.');
         
         // Show admin panel
-        console.log('Showing admin panel');
         showAdminPanel();
         
     } catch (error) {
-        console.error('Setup error:', error);
         errorDiv.textContent = 'Error creating admin account. Please try again.';
         errorDiv.style.display = 'block';
     }
@@ -199,25 +177,7 @@ function logout() {
     document.getElementById('admin-password').value = '';
 }
 
-// Reset admin credentials (for forgotten password)
-function resetAdminCredentials() {
-    const confirmed = confirm(
-        '⚠️ WARNING: This will permanently delete your current admin credentials.\n\n' +
-        'You will need to create new username and password.\n\n' +
-        'Are you sure you want to continue?'
-    );
-    
-    if (confirmed) {
-        // Remove stored credentials
-        localStorage.removeItem('adminCredentials');
-        localStorage.removeItem('adminLoggedIn');
-        
-        // Show setup screen
-        showSetupScreen();
-        
-        alert('✅ Admin credentials have been reset. Please create new credentials.');
-    }
-}
+
 
 function loadDashboardData() {
     // Load submissions from localStorage (in production, this would be from your backend)
