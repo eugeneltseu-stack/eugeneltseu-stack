@@ -1,7 +1,7 @@
 // Admin panel JavaScript functionality
 
 // Configuration
-const CASHAPP_HANDLE = '$YourCashAppHandle'; // Replace with your actual CashApp handle
+const CASHAPP_HANDLE = '$tbrownlts'; // CashApp handle for payments
 
 // Secure password hashing function
 async function hashPassword(password) {
@@ -469,9 +469,17 @@ To proceed with your photo edit, please send payment via CashApp:
 💵 Amount: ${request.total_price}
 📝 Note: Include "Photo Edit #${request.id.split('_')[1]}" in the payment note
 
+📱 EASY PAYMENT OPTIONS:
+1. Search "${CASHAPP_HANDLE}" in your CashApp
+2. Or scan the QR code attached to this email
+3. Send the exact amount: ${request.total_price}
+4. Include the request ID in the payment note
+
 Once payment is received, we'll begin editing your photo and deliver the final result within 24-48 hours.
 
 Please reply to this email with a screenshot of your payment confirmation for faster processing.
+
+QR Code: See attached image for quick CashApp payment
 
 If you have any questions, please don't hesitate to contact us.
 

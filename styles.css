@@ -1357,28 +1357,28 @@ body {
 
 /* CashApp Configuration Notice */
 .cashapp-config-notice {
-    background: #fef3c7;
-    border: 2px solid #f59e0b;
+    background: #f0fdf4;
+    border: 2px solid #22c55e;
     border-radius: 8px;
     padding: 1rem;
     margin: 1.5rem 0;
 }
 
 .config-content h4 {
-    color: #92400e;
+    color: #15803d;
     margin-bottom: 0.75rem;
     font-size: 1.1rem;
 }
 
 .config-content p {
-    color: #78350f;
+    color: #166534;
     margin: 0.5rem 0;
     font-size: 0.9rem;
 }
 
 .config-content code {
-    background: #fbbf24;
-    color: #78350f;
+    background: #dcfce7;
+    color: #15803d;
     padding: 4px 8px;
     border-radius: 4px;
     font-family: 'Courier New', monospace;
@@ -1386,6 +1386,47 @@ body {
     display: block;
     margin: 0.5rem 0;
     text-align: center;
+}
+
+/* CashApp Payment Info in FAQ */
+.cashapp-payment-info {
+    background: #f0fdf4;
+    border: 1px solid #22c55e;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+}
+
+.cashapp-payment-info code {
+    background: #dcfce7;
+    color: #15803d;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+
+.qr-code-container {
+    text-align: center;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    border: 2px dashed #22c55e;
+}
+
+.cashapp-qr {
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.qr-caption {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #15803d;
+    font-weight: 500;
 }
 
 .copy-button {
