@@ -257,12 +257,33 @@ function loadCompletedRequests(submissions) {
 
 function createRequestCard(request, status) {
     const date = new Date(request.submission_date).toLocaleDateString();
-    const options = [];
+    const optionsText = 'Standard'; // Simplified since we removed additional options
     
-    if (request.rush_order) options.push('Rush Order');
-    if (request.high_res) options.push('High Resolution');
-    
-    const optionsText = options.length > 0 ? options.join(', ') : 'Standard';
+    // Create image preview section
+    let imageSection = '';
+    if (request.file_data) {
+        imageSection = `
+            <div class="request-image">
+                <img src="${request.file_data}" alt="Uploaded photo" class="preview-image" onclick="openImageModal('${request.id}')">
+                <div class="image-overlay">
+                    <button class="download-button" onclick="downloadImage('${request.id}')" title="Download Original">
+                        📥
+                    </button>
+                    <button class="view-button" onclick="openImageModal('${request.id}')" title="View Full Size">
+                        🔍
+                    </button>
+                </div>
+            </div>
+        `;
+    } else {
+        imageSection = `
+            <div class="request-image">
+                <div class="image-placeholder">
+                    <span>${request.file_name || 'No Image'}</span>
+                </div>
+            </div>
+        `;
+    }
     
     let actions = '';
     if (status === 'pending') {
@@ -274,6 +295,7 @@ function createRequestCard(request, status) {
                 <button class="reject-button" onclick="rejectRequest('${request.id}')">
                     Reject
                 </button>
+                ${request.file_data ? `<button class="secondary-button" onclick="downloadImage('${request.id}')">Download Photo</button>` : ''}
             </div>
         `;
     } else if (status === 'in-progress') {
@@ -285,6 +307,7 @@ function createRequestCard(request, status) {
                 <button class="secondary-button" onclick="contactCustomer('${request.id}')">
                     Contact Customer
                 </button>
+                ${request.file_data ? `<button class="secondary-button" onclick="downloadImage('${request.id}')">Download Photo</button>` : ''}
             </div>
         `;
     } else {
@@ -293,17 +316,14 @@ function createRequestCard(request, status) {
                 <button class="secondary-button" onclick="viewDetails('${request.id}')">
                     View Details
                 </button>
+                ${request.file_data ? `<button class="secondary-button" onclick="downloadImage('${request.id}')">Download Photo</button>` : ''}
             </div>
         `;
     }
     
     return `
         <div class="request-card" data-id="${request.id}">
-            <div class="request-image">
-                <div class="image-placeholder">
-                    <span>${request.file_name || 'No Image'}</span>
-                </div>
-            </div>
+            ${imageSection}
             <div class="request-details">
                 <div class="request-header">
                     <h4>Request #${request.id.split('_')[1]}</h4>
@@ -313,7 +333,6 @@ function createRequestCard(request, status) {
                     <p><strong>Email:</strong> ${request.email}</p>
                     <p><strong>Name:</strong> ${request.name || 'Not provided'}</p>
                     <p><strong>Instructions:</strong> ${request.instructions}</p>
-                    <p><strong>Options:</strong> ${optionsText}</p>
                     <p><strong>Total:</strong> ${request.total_price}</p>
                     ${request.file_name ? `<p><strong>File:</strong> ${request.file_name} (${formatFileSize(request.file_size)})</p>` : ''}
                 </div>
@@ -537,6 +556,92 @@ function showNotification(message, type = 'success') {
             }
         }, 300);
     }, 5000);
+}
+
+// Image download and viewing functions
+function downloadImage(requestId) {
+    const submissions = JSON.parse(localStorage.getItem('photoEditSubmissions') || '[]');
+    const request = submissions.find(s => s.id === requestId);
+    
+    if (!request || !request.file_data) {
+        showNotification('No image data found for this request', 'error');
+        return;
+    }
+    
+    try {
+        // Create a temporary link element
+        const link = document.createElement('a');
+        link.href = request.file_data;
+        link.download = request.file_name || `photo_${requestId}.jpg`;
+        
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showNotification('Image downloaded successfully!');
+    } catch (error) {
+        console.error('Download error:', error);
+        showNotification('Error downloading image', 'error');
+    }
+}
+
+function openImageModal(requestId) {
+    const submissions = JSON.parse(localStorage.getItem('photoEditSubmissions') || '[]');
+    const request = submissions.find(s => s.id === requestId);
+    
+    if (!request || !request.file_data) {
+        showNotification('No image data found for this request', 'error');
+        return;
+    }
+    
+    // Create modal if it doesn't exist
+    let modal = document.getElementById('image-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'image-modal';
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content image-modal-content">
+                <div class="modal-header">
+                    <h3>Photo Preview - Request #${request.id.split('_')[1]}</h3>
+                    <button class="close-button" onclick="closeImageModal()">&times;</button>
+                </div>
+                <div class="modal-body image-modal-body">
+                    <img id="modal-image" src="${request.file_data}" alt="Full size photo">
+                    <div class="image-info">
+                        <p><strong>File:</strong> ${request.file_name}</p>
+                        <p><strong>Size:</strong> ${formatFileSize(request.file_size)}</p>
+                        <p><strong>Customer:</strong> ${request.name || 'Not provided'} (${request.email})</p>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="secondary-button" onclick="downloadImage('${requestId}')">Download Original</button>
+                    <button class="submit-button" onclick="closeImageModal()">Close</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    } else {
+        // Update existing modal
+        modal.querySelector('#modal-image').src = request.file_data;
+        modal.querySelector('h3').textContent = `Photo Preview - Request #${request.id.split('_')[1]}`;
+        modal.querySelector('.image-info').innerHTML = `
+            <p><strong>File:</strong> ${request.file_name}</p>
+            <p><strong>Size:</strong> ${formatFileSize(request.file_size)}</p>
+            <p><strong>Customer:</strong> ${request.name || 'Not provided'} (${request.email})</p>
+        `;
+        modal.querySelector('.secondary-button').onclick = () => downloadImage(requestId);
+    }
+    
+    modal.style.display = 'flex';
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('image-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
 // Demo data for testing (remove in production)

@@ -143,11 +143,15 @@ function validateEmail(email) {
 }
 
 function validateImageFile(file) {
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    // Use config file for allowed types and max size
+    const allowedTypes = window.PhotoEditConfig ? window.PhotoEditConfig.allowedFileTypes : [
+        'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 
+        'image/bmp', 'image/tiff', 'image/tif', 'image/svg+xml', 'image/x-icon'
+    ];
+    const maxSize = window.PhotoEditConfig ? window.PhotoEditConfig.maxFileSize : 10 * 1024 * 1024; // 10MB
     
     if (!allowedTypes.includes(file.type)) {
-        return { valid: false, message: 'Please upload a valid image file (JPG, PNG, GIF, or WebP)' };
+        return { valid: false, message: 'Please upload a valid image file (JPG, PNG, WebP, GIF, BMP, TIFF, SVG, or ICO)' };
     }
     
     if (file.size > maxSize) {

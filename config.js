@@ -19,7 +19,7 @@ window.PhotoEditConfig = {
     
     // File Upload Settings
     maxFileSize: 10 * 1024 * 1024, // 10MB in bytes
-    allowedFileTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'],
+    allowedFileTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/tiff', 'image/tif', 'image/svg+xml', 'image/x-icon'],
     
     // Admin Settings
     adminPassword: "photoedit2024", // Change this to a secure password
@@ -57,7 +57,7 @@ window.PhotoEditConfig = {
         },
         {
             question: "What file formats do you accept?",
-            answer: "We accept JPG, PNG, and most common image formats up to 10MB."
+            answer: "We accept all major image formats including JPG, PNG, WebP, GIF, BMP, TIFF, and SVG up to 10MB."
         },
         {
             question: "What types of edits do you do?",
