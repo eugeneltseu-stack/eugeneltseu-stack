@@ -73,6 +73,18 @@ body {
     background: #2563eb;
 }
 
+/* Admin Link Styling */
+.admin-link {
+    opacity: 0.6;
+    font-size: 0.9rem;
+    color: #94a3b8 !important;
+}
+
+.admin-link:hover {
+    opacity: 1;
+    color: #64748b !important;
+}
+
 .hamburger {
     display: none;
     flex-direction: column;
