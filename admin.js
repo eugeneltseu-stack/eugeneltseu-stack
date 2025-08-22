@@ -37,26 +37,41 @@ async function verifyAdminCredentials(username, password) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if admin credentials exist
-    if (!adminCredentialsExist()) {
-        // Show setup screen for first-time setup
-        showSetupScreen();
-    } else {
-        // Check if already logged in
-        if (localStorage.getItem('adminLoggedIn') === 'true') {
-            showAdminPanel();
-        } else {
-            showLoginScreen();
-        }
-    }
-
+    console.log('Admin panel loaded');
+    
+    // FOR TESTING: Uncomment the next line to reset admin credentials
+    // localStorage.removeItem('adminCredentials'); localStorage.removeItem('adminLoggedIn');
+    
     // Setup form handling
     const setupForm = document.getElementById('setup-form');
-    setupForm.addEventListener('submit', handleSetup);
+    if (setupForm) {
+        setupForm.addEventListener('submit', handleSetup);
+        console.log('Setup form listener added');
+    }
 
     // Login form handling
     const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', handleLogin);
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+        console.log('Login form listener added');
+    }
+
+    // Check if admin credentials exist
+    if (!adminCredentialsExist()) {
+        console.log('No admin credentials found, showing setup screen');
+        // Show setup screen for first-time setup
+        showSetupScreen();
+    } else {
+        console.log('Admin credentials exist');
+        // Check if already logged in
+        if (localStorage.getItem('adminLoggedIn') === 'true') {
+            console.log('Already logged in, showing admin panel');
+            showAdminPanel();
+        } else {
+            console.log('Not logged in, showing login screen');
+            showLoginScreen();
+        }
+    }
 
     // Load initial data
     loadDashboardData();
@@ -78,6 +93,7 @@ function showLoginScreen() {
 }
 
 async function handleSetup(e) {
+    console.log('Setup form submitted');
     e.preventDefault();
     
     const username = document.getElementById('setup-username').value.trim();
@@ -85,32 +101,42 @@ async function handleSetup(e) {
     const confirmPassword = document.getElementById('setup-password-confirm').value;
     const errorDiv = document.getElementById('setup-error');
     
+    console.log('Setup data:', { username: username, passwordLength: password.length });
+    
+    // Clear previous errors
+    errorDiv.style.display = 'none';
+    
     // Validation
     if (username.length < 3) {
+        console.log('Username too short');
         errorDiv.textContent = 'Username must be at least 3 characters long.';
         errorDiv.style.display = 'block';
         return;
     }
     
     if (password.length < 6) {
+        console.log('Password too short');
         errorDiv.textContent = 'Password must be at least 6 characters long.';
         errorDiv.style.display = 'block';
         return;
     }
     
     if (password !== confirmPassword) {
+        console.log('Passwords do not match');
         errorDiv.textContent = 'Passwords do not match.';
         errorDiv.style.display = 'block';
         return;
     }
     
     try {
+        console.log('Storing admin credentials...');
         // Store credentials securely
         await storeAdminCredentials(username, password);
+        console.log('Credentials stored successfully');
         
         // Auto-login after setup
         localStorage.setItem('adminLoggedIn', 'true');
-        showAdminPanel();
+        console.log('Auto-login set');
         
         // Clear form
         document.getElementById('setup-form').reset();
@@ -119,7 +145,12 @@ async function handleSetup(e) {
         // Show success message
         alert('✅ Admin account created successfully! You are now logged in.');
         
+        // Show admin panel
+        console.log('Showing admin panel');
+        showAdminPanel();
+        
     } catch (error) {
+        console.error('Setup error:', error);
         errorDiv.textContent = 'Error creating admin account. Please try again.';
         errorDiv.style.display = 'block';
     }
