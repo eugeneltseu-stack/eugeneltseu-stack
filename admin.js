@@ -292,8 +292,11 @@ function createRequestCard(request, status) {
                 <button class="approve-button" onclick="approveRequest('${request.id}')">
                     Send Stripe Link
                 </button>
-                <button class="reject-button" onclick="rejectRequest('${request.id}')">
-                    Reject
+                <button class="success-button" onclick="markPaymentSuccessful('${request.id}')">
+                    Payment Successful
+                </button>
+                <button class="delete-button" onclick="deleteRequest('${request.id}')">
+                    Delete Request
                 </button>
                 ${request.file_data ? `<button class="secondary-button" onclick="downloadImage('${request.id}')">Download Photo</button>` : ''}
             </div>
@@ -307,6 +310,9 @@ function createRequestCard(request, status) {
                 <button class="secondary-button" onclick="contactCustomer('${request.id}')">
                     Contact Customer
                 </button>
+                <button class="delete-button" onclick="deleteRequest('${request.id}')">
+                    Delete Request
+                </button>
                 ${request.file_data ? `<button class="secondary-button" onclick="downloadImage('${request.id}')">Download Photo</button>` : ''}
             </div>
         `;
@@ -315,6 +321,9 @@ function createRequestCard(request, status) {
             <div class="request-actions">
                 <button class="secondary-button" onclick="viewDetails('${request.id}')">
                     View Details
+                </button>
+                <button class="delete-button" onclick="deleteRequest('${request.id}')">
+                    Delete Request
                 </button>
                 ${request.file_data ? `<button class="secondary-button" onclick="downloadImage('${request.id}')">Download Photo</button>` : ''}
             </div>
@@ -352,8 +361,8 @@ function approveRequest(requestId) {
     showStripeModal(request);
 }
 
-function rejectRequest(requestId) {
-    if (!confirm('Are you sure you want to reject this request?')) return;
+function deleteRequest(requestId) {
+    if (!confirm('Are you sure you want to permanently delete this request? This action cannot be undone.')) return;
     
     const submissions = JSON.parse(localStorage.getItem('photoEditSubmissions') || '[]');
     const updatedSubmissions = submissions.filter(s => s.id !== requestId);
@@ -361,7 +370,25 @@ function rejectRequest(requestId) {
     localStorage.setItem('photoEditSubmissions', JSON.stringify(updatedSubmissions));
     loadDashboardData();
     
-    showNotification('Request rejected and removed', 'error');
+    showNotification('Request deleted successfully', 'error');
+}
+
+function markPaymentSuccessful(requestId) {
+    if (!confirm('Mark this request as paid and move to In Progress?')) return;
+    
+    const submissions = JSON.parse(localStorage.getItem('photoEditSubmissions') || '[]');
+    const request = submissions.find(s => s.id === requestId);
+    
+    if (!request) return;
+    
+    request.status = 'in-progress';
+    request.payment_date = new Date().toISOString();
+    request.payment_method = 'Manual confirmation';
+    
+    localStorage.setItem('photoEditSubmissions', JSON.stringify(submissions));
+    loadDashboardData();
+    
+    showNotification('Payment confirmed! Request moved to In Progress.');
 }
 
 function markCompleted(requestId) {
