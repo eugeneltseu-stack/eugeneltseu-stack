@@ -590,6 +590,30 @@ body {
     text-align: center;
 }
 
+.forgot-password {
+    margin-top: 1.5rem;
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: #2563eb;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.link-button:hover {
+    background: #f1f5f9;
+    color: #1d4ed8;
+}
+
 .admin-panel {
     min-height: 100vh;
     background: #f8fafc;

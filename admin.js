@@ -1,14 +1,58 @@
 // Admin panel JavaScript functionality
 
 // Configuration
-const ADMIN_PASSWORD = 'photoedit2024'; // Change this to a secure password
 const STRIPE_DASHBOARD_URL = 'https://dashboard.stripe.com'; // Your Stripe dashboard
 
+// Secure password hashing function
+async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Check if admin credentials exist
+function adminCredentialsExist() {
+    return localStorage.getItem('adminCredentials') !== null;
+}
+
+// Store admin credentials securely
+async function storeAdminCredentials(username, password) {
+    const hashedPassword = await hashPassword(password);
+    const credentials = {
+        username: username,
+        passwordHash: hashedPassword,
+        createdAt: new Date().toISOString()
+    };
+    localStorage.setItem('adminCredentials', JSON.stringify(credentials));
+}
+
+// Verify admin credentials
+async function verifyAdminCredentials(username, password) {
+    const storedCredentials = JSON.parse(localStorage.getItem('adminCredentials'));
+    if (!storedCredentials) return false;
+    
+    const hashedPassword = await hashPassword(password);
+    return storedCredentials.username === username && storedCredentials.passwordHash === hashedPassword;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if already logged in
-    if (localStorage.getItem('adminLoggedIn') === 'true') {
-        showAdminPanel();
+    // Check if admin credentials exist
+    if (!adminCredentialsExist()) {
+        // Show setup screen for first-time setup
+        showSetupScreen();
+    } else {
+        // Check if already logged in
+        if (localStorage.getItem('adminLoggedIn') === 'true') {
+            showAdminPanel();
+        } else {
+            showLoginScreen();
+        }
     }
+
+    // Setup form handling
+    const setupForm = document.getElementById('setup-form');
+    setupForm.addEventListener('submit', handleSetup);
 
     // Login form handling
     const loginForm = document.getElementById('login-form');
@@ -21,23 +65,95 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(loadDashboardData, 30000);
 });
 
-function handleLogin(e) {
+function showSetupScreen() {
+    document.getElementById('setup-screen').style.display = 'block';
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'none';
+}
+
+function showLoginScreen() {
+    document.getElementById('setup-screen').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'block';
+    document.getElementById('admin-panel').style.display = 'none';
+}
+
+async function handleSetup(e) {
     e.preventDefault();
     
+    const username = document.getElementById('setup-username').value.trim();
+    const password = document.getElementById('setup-password').value;
+    const confirmPassword = document.getElementById('setup-password-confirm').value;
+    const errorDiv = document.getElementById('setup-error');
+    
+    // Validation
+    if (username.length < 3) {
+        errorDiv.textContent = 'Username must be at least 3 characters long.';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    if (password.length < 6) {
+        errorDiv.textContent = 'Password must be at least 6 characters long.';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    if (password !== confirmPassword) {
+        errorDiv.textContent = 'Passwords do not match.';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    try {
+        // Store credentials securely
+        await storeAdminCredentials(username, password);
+        
+        // Auto-login after setup
+        localStorage.setItem('adminLoggedIn', 'true');
+        showAdminPanel();
+        
+        // Clear form
+        document.getElementById('setup-form').reset();
+        errorDiv.style.display = 'none';
+        
+        // Show success message
+        alert('✅ Admin account created successfully! You are now logged in.');
+        
+    } catch (error) {
+        errorDiv.textContent = 'Error creating admin account. Please try again.';
+        errorDiv.style.display = 'block';
+    }
+}
+
+async function handleLogin(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('admin-username').value.trim();
     const password = document.getElementById('admin-password').value;
     const errorDiv = document.getElementById('login-error');
     
-    if (password === ADMIN_PASSWORD) {
-        localStorage.setItem('adminLoggedIn', 'true');
-        showAdminPanel();
-        errorDiv.style.display = 'none';
-    } else {
+    try {
+        const isValid = await verifyAdminCredentials(username, password);
+        
+        if (isValid) {
+            localStorage.setItem('adminLoggedIn', 'true');
+            showAdminPanel();
+            errorDiv.style.display = 'none';
+            
+            // Clear form
+            document.getElementById('login-form').reset();
+        } else {
+            errorDiv.style.display = 'block';
+            document.getElementById('admin-password').value = '';
+        }
+    } catch (error) {
+        errorDiv.textContent = 'Login error. Please try again.';
         errorDiv.style.display = 'block';
-        document.getElementById('admin-password').value = '';
     }
 }
 
 function showAdminPanel() {
+    document.getElementById('setup-screen').style.display = 'none';
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-panel').style.display = 'block';
     loadDashboardData();
@@ -45,9 +161,31 @@ function showAdminPanel() {
 
 function logout() {
     localStorage.removeItem('adminLoggedIn');
-    document.getElementById('login-screen').style.display = 'flex';
-    document.getElementById('admin-panel').style.display = 'none';
+    showLoginScreen();
+    
+    // Clear login form
+    document.getElementById('admin-username').value = '';
     document.getElementById('admin-password').value = '';
+}
+
+// Reset admin credentials (for forgotten password)
+function resetAdminCredentials() {
+    const confirmed = confirm(
+        '⚠️ WARNING: This will permanently delete your current admin credentials.\n\n' +
+        'You will need to create new username and password.\n\n' +
+        'Are you sure you want to continue?'
+    );
+    
+    if (confirmed) {
+        // Remove stored credentials
+        localStorage.removeItem('adminCredentials');
+        localStorage.removeItem('adminLoggedIn');
+        
+        // Show setup screen
+        showSetupScreen();
+        
+        alert('✅ Admin credentials have been reset. Please create new credentials.');
+    }
 }
 
 function loadDashboardData() {
