@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Photo Request - PhotoEdit Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>PhotoEdit Pro</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="request.html" class="nav-link active">Request</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#faq" class="nav-link">FAQ</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Request Form Section -->
+    <section class="request-section">
+        <div class="container">
+            <div class="request-header">
+                <h1>Submit Your Photo Edit Request</h1>
+                <p>Fill out the form below to get your photo professionally edited for just $1</p>
+            </div>
+
+            <!-- Warning Banner -->
+            <div class="warning-banner-inline">
+                <span class="warning-icon">⚠️</span>
+                <p><strong>Content Policy:</strong> We do not accept NSFW, explicit, or inappropriate content. All submissions are reviewed before processing.</p>
+            </div>
+
+            <div class="request-container">
+                <form id="photo-request-form" class="request-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data">
+                    <div class="form-section">
+                        <h3>Photo Upload</h3>
+                        <div class="form-group">
+                            <label for="photo-upload" class="upload-label">
+                                <div class="upload-area" id="upload-area">
+                                    <div class="upload-icon">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M7 10L12 5L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M12 5V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <h4>Click to upload or drag and drop</h4>
+                                    <p>JPG, PNG up to 10MB</p>
+                                    <div class="file-info" id="file-info" style="display: none;">
+                                        <span id="file-name"></span>
+                                        <span id="file-size"></span>
+                                    </div>
+                                </div>
+                                <input type="file" id="photo-upload" name="photo" accept="image/*" required style="display: none;">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Contact Information</h3>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com">
+                            <small>We'll use this to send you the payment link and edited photo</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name (Optional)</label>
+                            <input type="text" id="name" name="name" placeholder="Your name">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Edit Instructions</h3>
+                        <div class="form-group">
+                            <label for="instructions">What edits would you like? *</label>
+                            <textarea id="instructions" name="instructions" rows="6" required placeholder="Please be as specific as possible. For example:
+- Remove background and make it white
+- Brighten the image and increase contrast
+- Remove the person in the background
+- Add a vintage filter
+- Crop to focus on the subject
+- Color correction to make it more vibrant"></textarea>
+                            <small>The more detailed your instructions, the better we can meet your expectations</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Additional Options</h3>
+                        <div class="form-group">
+                            <label for="rush-order" class="checkbox-label">
+                                <input type="checkbox" id="rush-order" name="rush_order" value="yes">
+                                <span class="checkmark"></span>
+                                Rush Order (+$2) - 12 hour delivery
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="high-res" class="checkbox-label">
+                                <input type="checkbox" id="high-res" name="high_res" value="yes">
+                                <span class="checkmark"></span>
+                                High Resolution Output (+$1)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="pricing-summary">
+                            <h4>Pricing Summary</h4>
+                            <div class="price-line">
+                                <span>Base Edit:</span>
+                                <span>$1.00</span>
+                            </div>
+                            <div class="price-line" id="rush-price" style="display: none;">
+                                <span>Rush Order:</span>
+                                <span>$2.00</span>
+                            </div>
+                            <div class="price-line" id="highres-price" style="display: none;">
+                                <span>High Resolution:</span>
+                                <span>$1.00</span>
+                            </div>
+                            <div class="price-total">
+                                <span>Total:</span>
+                                <span id="total-price">$1.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-button" id="submit-btn">
+                            <span class="button-text">Submit Request</span>
+                            <span class="button-loading" style="display: none;">
+                                <svg class="spinner" width="20" height="20" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.25"/>
+                                    <path d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"/>
+                                </svg>
+                                Submitting...
+                            </span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Success Message -->
+                <div id="success-message" class="success-message" style="display: none;">
+                    <div class="success-icon">✅</div>
+                    <h3>Request Submitted Successfully!</h3>
+                    <p>Thank you for your submission. We'll review your request and send you a payment link via email within 24 hours.</p>
+                    <p><strong>What happens next:</strong></p>
+                    <ol>
+                        <li>We'll review your photo and instructions</li>
+                        <li>If approved, you'll receive a Stripe payment link</li>
+                        <li>After payment, we'll edit your photo</li>
+                        <li>You'll receive the edited photo within 24-48 hours</li>
+                    </ol>
+                    <button onclick="submitAnother()" class="secondary-button">Submit Another Request</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PhotoEdit Pro</h3>
+                    <p>Professional photo editing at an affordable price.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="request.html">Submit Request</a></li>
+                        <li><a href="index.html#faq">FAQ</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Policies</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Content Guidelines</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PhotoEdit Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script src="request.js"></script>
+</body>
+</html>

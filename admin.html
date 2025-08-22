@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - PhotoEdit Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-container">
+            <div class="login-form">
+                <h2>Admin Login</h2>
+                <p>Enter the admin password to access the panel</p>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="admin-password">Password</label>
+                        <input type="password" id="admin-password" required>
+                    </div>
+                    <button type="submit" class="submit-button">Login</button>
+                </form>
+                <div id="login-error" class="error-message" style="display: none;">
+                    Incorrect password. Please try again.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="admin-panel" style="display: none;">
+        <!-- Navigation -->
+        <nav class="admin-navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2>PhotoEdit Pro - Admin</h2>
+                </div>
+                <div class="admin-actions">
+                    <button onclick="refreshRequests()" class="refresh-button">Refresh</button>
+                    <button onclick="logout()" class="logout-button">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="admin-container">
+            <!-- Stats Dashboard -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Pending Requests</h3>
+                    <div class="stat-number" id="pending-count">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Completed Today</h3>
+                    <div class="stat-number" id="completed-count">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Revenue</h3>
+                    <div class="stat-number" id="revenue-count">$0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Average Rating</h3>
+                    <div class="stat-number" id="rating-count">5.0</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="admin-tabs">
+                <button class="tab-button active" onclick="showTab('pending')">Pending Requests</button>
+                <button class="tab-button" onclick="showTab('in-progress')">In Progress</button>
+                <button class="tab-button" onclick="showTab('completed')">Completed</button>
+            </div>
+
+            <!-- Pending Requests -->
+            <div id="pending-tab" class="tab-content active">
+                <div class="requests-header">
+                    <h3>Pending Photo Edit Requests</h3>
+                    <p>Review and approve requests before sending payment links</p>
+                </div>
+                
+                <div id="pending-requests" class="requests-grid">
+                    <!-- Sample request for demonstration -->
+                    <div class="request-card">
+                        <div class="request-image">
+                            <div class="image-placeholder">
+                                <span>No Image</span>
+                            </div>
+                        </div>
+                        <div class="request-details">
+                            <div class="request-header">
+                                <h4>Sample Request</h4>
+                                <span class="request-date">2024-01-15</span>
+                            </div>
+                            <div class="request-info">
+                                <p><strong>Email:</strong> sample@email.com</p>
+                                <p><strong>Name:</strong> John Doe</p>
+                                <p><strong>Instructions:</strong> Remove background and make it white, brighten the image</p>
+                                <p><strong>Options:</strong> Rush Order, High Resolution</p>
+                                <p><strong>Total:</strong> $4.00</p>
+                            </div>
+                            <div class="request-actions">
+                                <button class="approve-button" onclick="approveRequest('sample-1')">
+                                    Send Stripe Link
+                                </button>
+                                <button class="reject-button" onclick="rejectRequest('sample-1')">
+                                    Reject
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="no-pending" class="no-requests" style="display: none;">
+                    <h4>No Pending Requests</h4>
+                    <p>All requests have been processed. New submissions will appear here.</p>
+                </div>
+            </div>
+
+            <!-- In Progress -->
+            <div id="in-progress-tab" class="tab-content">
+                <div class="requests-header">
+                    <h3>In Progress</h3>
+                    <p>Requests that have been paid and are being edited</p>
+                </div>
+                
+                <div id="in-progress-requests" class="requests-grid">
+                    <!-- In progress requests will be populated here -->
+                </div>
+
+                <div id="no-progress" class="no-requests">
+                    <h4>No Requests In Progress</h4>
+                    <p>Paid requests will appear here for editing.</p>
+                </div>
+            </div>
+
+            <!-- Completed -->
+            <div id="completed-tab" class="tab-content">
+                <div class="requests-header">
+                    <h3>Completed Requests</h3>
+                    <p>Successfully completed and delivered edits</p>
+                </div>
+                
+                <div id="completed-requests" class="requests-grid">
+                    <!-- Completed requests will be populated here -->
+                </div>
+
+                <div id="no-completed" class="no-requests">
+                    <h4>No Completed Requests</h4>
+                    <p>Completed requests will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stripe Link Modal -->
+        <div id="stripe-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Send Stripe Payment Link</h3>
+                    <button class="close-button" onclick="closeStripeModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Generate and send a Stripe payment link for this request:</p>
+                    <div class="stripe-details">
+                        <p><strong>Customer:</strong> <span id="stripe-customer"></span></p>
+                        <p><strong>Amount:</strong> <span id="stripe-amount"></span></p>
+                        <p><strong>Description:</strong> Photo editing service</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="stripe-link">Stripe Payment Link</label>
+                        <input type="url" id="stripe-link" placeholder="https://buy.stripe.com/..." required>
+                        <small>Create a payment link in your Stripe dashboard and paste it here</small>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="secondary-button" onclick="closeStripeModal()">Cancel</button>
+                    <button class="submit-button" onclick="sendStripeLink()">Send Link</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Template Modal -->
+        <div id="email-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Email Template</h3>
+                    <button class="close-button" onclick="closeEmailModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Copy this email template to send to the customer:</p>
+                    <textarea id="email-template" rows="10" readonly></textarea>
+                    <button class="copy-button" onclick="copyEmailTemplate()">Copy to Clipboard</button>
+                </div>
+                <div class="modal-actions">
+                    <button class="submit-button" onclick="closeEmailModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

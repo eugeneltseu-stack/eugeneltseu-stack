@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Edit Pro - $1 Per Image</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>PhotoEdit Pro</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="request.html" class="nav-link">Request</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#faq" class="nav-link">FAQ</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Get Your Photos Edited</h1>
+                <p class="hero-subtitle">Professional photo editing service - Only $1 per image</p>
+                <a href="request.html" class="cta-button">Submit Photo Request</a>
+            </div>
+            <div class="hero-image">
+                <div class="image-placeholder">
+                    <svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="300" height="200" rx="12" fill="#f8fafc"/>
+                        <path d="M75 75L125 125L175 100L225 125V175H75V75Z" fill="#e2e8f0"/>
+                        <circle cx="100" cy="90" r="15" fill="#cbd5e1"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Warning Banner -->
+    <section class="warning-banner">
+        <div class="container">
+            <div class="warning-content">
+                <span class="warning-icon">⚠️</span>
+                <p><strong>Important:</strong> We do not accept NSFW or explicit content. All submissions are reviewed before processing.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Upload Your Photo</h3>
+                    <p>Submit your image along with detailed editing instructions</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Add Instructions</h3>
+                    <p>Tell us exactly what edits you want - be as specific as possible</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Wait for Approval</h3>
+                    <p>We'll review your request and ensure it meets our guidelines</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Pay via Stripe</h3>
+                    <p>Receive a secure payment link via email - only $1 per image</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>Get Your Edit</h3>
+                    <p>Receive your professionally edited photo within 24-48 hours</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What's the turnaround time?</h3>
+                    <p>Most edits are completed within 24-48 hours after payment confirmation.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What file formats do you accept?</h3>
+                    <p>We accept JPG, PNG, and most common image formats up to 10MB.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What types of edits do you do?</h3>
+                    <p>Color correction, background removal, retouching, filters, and basic photo enhancements.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do you offer refunds?</h3>
+                    <p>If you're not satisfied with the edit, we'll revise it once for free or provide a full refund.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is my data secure?</h3>
+                    <p>Yes, all images are processed securely and deleted after delivery unless you request otherwise.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I request multiple edits?</h3>
+                    <p>Each image is $1. For multiple images, please submit separate requests or contact us for bulk pricing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Have Questions?</h3>
+                    <p>Feel free to reach out if you have any questions about our photo editing service.</p>
+                    <div class="contact-item">
+                        <strong>Email:</strong> support@photoeditpro.com
+                    </div>
+                    <div class="contact-item">
+                        <strong>Response Time:</strong> Within 24 hours
+                    </div>
+                </div>
+                <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <div class="form-group">
+                        <label for="contact-name">Name</label>
+                        <input type="text" id="contact-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message">Message</label>
+                        <textarea id="contact-message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PhotoEdit Pro</h3>
+                    <p>Professional photo editing at an affordable price.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="request.html">Submit Request</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Policies</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Content Guidelines</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PhotoEdit Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

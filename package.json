@@ -1,0 +1,36 @@
+{
+  "name": "photoedit-pro",
+  "version": "1.0.0",
+  "description": "A static website for photo editing services - $1 per image",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "python -m http.server 8000",
+    "build": "echo 'No build process needed for static site'",
+    "deploy": "echo 'Deploy to GitHub Pages or your preferred hosting service'"
+  },
+  "keywords": [
+    "photo-editing",
+    "static-website",
+    "github-pages",
+    "html",
+    "css",
+    "javascript",
+    "formspree",
+    "stripe"
+  ],
+  "author": "PhotoEdit Pro",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/photoedit-pro.git"
+  },
+  "homepage": "https://yourusername.github.io/photoedit-pro",
+  "devDependencies": {},
+  "dependencies": {},
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
