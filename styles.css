@@ -1429,6 +1429,125 @@ body {
     font-weight: 500;
 }
 
+/* Payment Required Notice */
+.payment-required-notice {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 2px solid #f59e0b;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.payment-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.payment-header h3 {
+    color: #92400e;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.payment-header p {
+    color: #78350f;
+    font-size: 1rem;
+}
+
+.payment-methods {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.payment-method {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.payment-method h4 {
+    color: #1f2937;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.cashapp-details {
+    background: #f0fdf4;
+    border: 1px solid #22c55e;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cashapp-details p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.cashapp-details code {
+    background: #dcfce7;
+    color: #15803d;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+
+.qr-code-section {
+    margin: 1rem 0;
+}
+
+.payment-instructions {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.payment-instructions h5 {
+    color: #374151;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.payment-instructions ol {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.payment-instructions li {
+    margin: 0.5rem 0;
+    color: #4b5563;
+    font-size: 0.9rem;
+}
+
+/* Payment Upload Area */
+.payment-upload-area {
+    border: 2px dashed #f59e0b !important;
+    background: #fef3c7 !important;
+}
+
+.payment-upload-area:hover {
+    border-color: #d97706 !important;
+    background: #fde68a !important;
+}
+
+.payment-upload-area .upload-icon {
+    color: #d97706;
+}
+
+/* Payment Status Styles */
+.status-paid {
+    color: #15803d;
+    font-weight: bold;
+    background: #dcfce7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
 .copy-button {
     background: #2563eb;
     color: white;

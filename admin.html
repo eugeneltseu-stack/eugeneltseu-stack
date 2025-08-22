@@ -115,7 +115,7 @@
             <div id="pending-tab" class="tab-content active">
                 <div class="requests-header">
                     <h3>Pending Photo Edit Requests</h3>
-                    <p>Review and approve requests before sending payment links</p>
+                    <p>Review requests with payment confirmations and begin processing</p>
                 </div>
                 
                 <div id="pending-requests" class="requests-grid">
@@ -135,15 +135,12 @@
                                 <p><strong>Email:</strong> sample@email.com</p>
                                 <p><strong>Name:</strong> John Doe</p>
                                 <p><strong>Instructions:</strong> Remove background and make it white, brighten the image</p>
-                                <p><strong>Options:</strong> Rush Order, High Resolution</p>
-                                <p><strong>Total:</strong> $4.00</p>
+                                <p><strong>Payment Status:</strong> <span class="status-paid">✅ Paid ($1.00)</span></p>
+                                <p><strong>Payment Confirmation:</strong> <a href="#" onclick="viewPaymentConfirmation('sample-1')">View Screenshot</a></p>
                             </div>
                             <div class="request-actions">
-                                <button class="approve-button" onclick="approveRequest('sample-1')">
-                                    Send Payment Details
-                                </button>
-                                <button class="success-button" onclick="markPaymentSuccessful('sample-1')">
-                                    Payment Successful
+                                <button class="approve-button" onclick="startProcessing('sample-1')">
+                                    Start Processing
                                 </button>
                                 <button class="delete-button" onclick="deleteRequest('sample-1')">
                                     Delete Request

@@ -78,6 +78,43 @@
                 <p class="limitations-tip">💡 <strong>Tip:</strong> For best results, submit photos with clear subjects and minimal background complexity!</p>
             </div>
 
+            <!-- Payment Required Notice -->
+            <div class="payment-required-notice">
+                <div class="payment-header">
+                    <h3>💳 Payment Required Before Submission</h3>
+                    <p>Please send payment first, then submit your request with the payment confirmation.</p>
+                </div>
+                
+                <div class="payment-methods">
+                    <div class="payment-method">
+                        <h4>📱 CashApp Payment</h4>
+                        <div class="cashapp-details">
+                            <p><strong>CashApp Handle:</strong> <code>$tbrownlts</code></p>
+                            <p><strong>Amount:</strong> <code>$1.00</code></p>
+                            <p><strong>Payment Note:</strong> Include "Photo Edit" in the note</p>
+                        </div>
+                        
+                        <div class="qr-code-section">
+                            <div class="qr-code-container">
+                                <img src="$tbrownlts.png" alt="CashApp QR Code for $tbrownlts" class="cashapp-qr">
+                                <p class="qr-caption">Scan with CashApp for instant payment</p>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-instructions">
+                            <h5>Payment Steps:</h5>
+                            <ol>
+                                <li>Send $1.00 to <strong>$tbrownlts</strong> via CashApp</li>
+                                <li>Include "Photo Edit" in the payment note</li>
+                                <li>Take a screenshot of your payment confirmation</li>
+                                <li>Upload the screenshot in the form below</li>
+                                <li>Submit your photo edit request</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="request-container">
                 <form id="photo-request-form" class="request-form">
                     <div class="form-section">
@@ -105,11 +142,38 @@
                     </div>
 
                     <div class="form-section">
+                        <h3>Payment Confirmation</h3>
+                        <div class="form-group">
+                            <label for="payment-confirmation" class="upload-label">
+                                <div class="upload-area payment-upload-area" id="payment-upload-area">
+                                    <div class="upload-icon">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <h4>Upload Payment Confirmation Screenshot</h4>
+                                    <p>Screenshot of your CashApp payment to $tbrownlts</p>
+                                    <div class="file-info" id="payment-file-info" style="display: none;">
+                                        <span id="payment-file-name"></span>
+                                        <span id="payment-file-size"></span>
+                                    </div>
+                                </div>
+                                <input type="file" id="payment-confirmation" name="payment-confirmation" accept="image/jpeg,image/jpg,image/png,image/webp" required style="display: none;">
+                            </label>
+                            <small>⚠️ <strong>Required:</strong> Upload a screenshot showing your $1.00 payment to $tbrownlts</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
                         <h3>Contact Information</h3>
                         <div class="form-group">
                             <label for="email">Email Address *</label>
                             <input type="email" id="email" name="email" required placeholder="your@email.com">
-                            <small>We'll use this to send you the payment link and edited photo</small>
+                            <small>We'll use this to send you the edited photo once processing is complete</small>
                         </div>
                         <div class="form-group">
                             <label for="name">Name (Optional)</label>
@@ -160,15 +224,15 @@
                 <div id="success-message" class="success-message" style="display: none;">
                     <div class="success-icon">✅</div>
                     <h3>AI Photo Edit Request Submitted!</h3>
-                    <p>Thank you for your submission. Your request has been received and will be processed with our Qwen3 AI technology.</p>
+                    <p>Thank you for your payment and submission! Your request has been received and will be processed with our Qwen3 AI technology.</p>
                     <p><strong>What happens next:</strong></p>
                     <ol>
-                        <li>We'll review your photo and instructions for quality and content policy compliance</li>
-                        <li>If approved, you'll receive CashApp payment details via email within 24 hours</li>
-                        <li>After payment, our Qwen3 AI will process your photo with the requested edits</li>
-                        <li>You'll receive your AI-enhanced photo within 24-48 hours</li>
+                        <li>We'll verify your payment confirmation screenshot</li>
+                        <li>Review your photo and instructions for quality and content policy compliance</li>
+                        <li>Our Qwen3 AI will process your photo with the requested edits</li>
+                        <li>You'll receive your AI-enhanced photo within 24-48 hours via email</li>
                     </ol>
-                    <p><strong>📧 Check your email for the CashApp payment details and further instructions.</strong></p>
+                    <p><strong>📧 Your edited photo will be delivered to your email address once processing is complete.</strong></p>
                     <button onclick="submitAnother()" class="secondary-button">Submit Another Request</button>
                 </div>
             </div>

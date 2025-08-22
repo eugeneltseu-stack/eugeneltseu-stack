@@ -7,18 +7,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const fileInfo = document.getElementById('file-info');
     const fileName = document.getElementById('file-name');
     const fileSize = document.getElementById('file-size');
+    
+    // Payment confirmation elements
+    const paymentInput = document.getElementById('payment-confirmation');
+    const paymentUploadArea = document.getElementById('payment-upload-area');
+    const paymentFileInfo = document.getElementById('payment-file-info');
+    const paymentFileName = document.getElementById('payment-file-name');
+    const paymentFileSize = document.getElementById('payment-file-size');
+    
     const submitBtn = document.getElementById('submit-btn');
     const successMessage = document.getElementById('success-message');
 
     let selectedFile = null;
+    let selectedPaymentFile = null;
 
     // File upload handling
     fileInput.addEventListener('change', handleFileSelect);
+    paymentInput.addEventListener('change', handlePaymentFileSelect);
     
     // Drag and drop functionality
     uploadArea.addEventListener('dragover', handleDragOver);
     uploadArea.addEventListener('dragleave', handleDragLeave);
     uploadArea.addEventListener('drop', handleFileDrop);
+    
+    // Payment upload drag and drop
+    paymentUploadArea.addEventListener('dragover', handlePaymentDragOver);
+    paymentUploadArea.addEventListener('dragleave', handlePaymentDragLeave);
+    paymentUploadArea.addEventListener('drop', handlePaymentFileDrop);
 
     // Form submission
     form.addEventListener('submit', handleFormSubmit);
@@ -75,7 +90,62 @@ document.addEventListener('DOMContentLoaded', function() {
         window.PhotoEditPro.showNotification('File uploaded successfully!');
     }
 
+    // Payment file handling functions
+    function handlePaymentFileSelect(e) {
+        const file = e.target.files[0];
+        if (file) {
+            processPaymentFile(file);
+        }
+    }
 
+    function handlePaymentDragOver(e) {
+        e.preventDefault();
+        paymentUploadArea.classList.add('dragover');
+    }
+
+    function handlePaymentDragLeave(e) {
+        e.preventDefault();
+        paymentUploadArea.classList.remove('dragover');
+    }
+
+    function handlePaymentFileDrop(e) {
+        e.preventDefault();
+        paymentUploadArea.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            processPaymentFile(files[0]);
+        }
+    }
+
+    function processPaymentFile(file) {
+        // Validate file type
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        if (!allowedTypes.includes(file.type)) {
+            window.PhotoEditPro.showNotification('Please upload a valid image file (JPG, PNG, WebP)', 'error');
+            return;
+        }
+
+        // Validate file size (max 5MB for payment confirmation)
+        if (file.size > 5 * 1024 * 1024) {
+            window.PhotoEditPro.showNotification('Payment confirmation file must be less than 5MB', 'error');
+            return;
+        }
+
+        selectedPaymentFile = file;
+        
+        // Update UI
+        paymentFileName.textContent = file.name;
+        paymentFileSize.textContent = window.PhotoEditPro.formatFileSize(file.size);
+        paymentFileInfo.style.display = 'block';
+        
+        // Hide upload instructions
+        paymentUploadArea.querySelector('h4').style.display = 'none';
+        paymentUploadArea.querySelector('p').style.display = 'none';
+        paymentUploadArea.querySelector('.upload-icon').style.display = 'none';
+
+        window.PhotoEditPro.showNotification('Payment confirmation uploaded successfully!');
+    }
 
     function handleFormSubmit(e) {
         e.preventDefault();
@@ -86,6 +156,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!selectedFile) {
             window.PhotoEditPro.showNotification('Please upload a photo', 'error');
+            return;
+        }
+        
+        if (!selectedPaymentFile) {
+            window.PhotoEditPro.showNotification('Please upload your payment confirmation screenshot', 'error');
             return;
         }
         
@@ -121,22 +196,46 @@ document.addEventListener('DOMContentLoaded', function() {
             file_name: selectedFile ? selectedFile.name : '',
             file_size: selectedFile ? selectedFile.size : 0,
             file_type: selectedFile ? selectedFile.type : '',
+            payment_file_name: selectedPaymentFile ? selectedPaymentFile.name : '',
+            payment_file_size: selectedPaymentFile ? selectedPaymentFile.size : 0,
+            payment_file_type: selectedPaymentFile ? selectedPaymentFile.type : '',
             total_price: '$1.00',
             submission_date: new Date().toISOString(),
             status: 'pending',
-            payment_status: 'pending'
+            payment_status: 'paid' // Since payment confirmation is uploaded
         };
         
-        // Store file as base64 for admin panel preview (for demo purposes)
-        if (selectedFile) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                submissionData.file_data = e.target.result;
+        // Store files as base64 for admin panel preview (for demo purposes)
+        let filesProcessed = 0;
+        const totalFiles = 2; // photo + payment confirmation
+        
+        function checkAllFilesProcessed() {
+            filesProcessed++;
+            if (filesProcessed === totalFiles) {
                 saveSubmissionData(submissionData);
+            }
+        }
+        
+        if (selectedFile) {
+            const photoReader = new FileReader();
+            photoReader.onload = function(e) {
+                submissionData.file_data = e.target.result;
+                checkAllFilesProcessed();
             };
-            reader.readAsDataURL(selectedFile);
+            photoReader.readAsDataURL(selectedFile);
         } else {
-            saveSubmissionData(submissionData);
+            checkAllFilesProcessed();
+        }
+        
+        if (selectedPaymentFile) {
+            const paymentReader = new FileReader();
+            paymentReader.onload = function(e) {
+                submissionData.payment_file_data = e.target.result;
+                checkAllFilesProcessed();
+            };
+            paymentReader.readAsDataURL(selectedPaymentFile);
+        } else {
+            checkAllFilesProcessed();
         }
     }
     
