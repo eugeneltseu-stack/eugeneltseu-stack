@@ -1,7 +1,7 @@
 // Admin panel JavaScript functionality
 
 // Configuration
-const STRIPE_DASHBOARD_URL = 'https://dashboard.stripe.com'; // Your Stripe dashboard
+const CASHAPP_HANDLE = '$YourCashAppHandle'; // Replace with your actual CashApp handle
 
 // Secure password hashing function
 async function hashPassword(password) {
@@ -290,7 +290,7 @@ function createRequestCard(request, status) {
         actions = `
             <div class="request-actions">
                 <button class="approve-button" onclick="approveRequest('${request.id}')">
-                    Send Stripe Link
+                    Send Payment Details
                 </button>
                 <button class="success-button" onclick="markPaymentSuccessful('${request.id}')">
                     Payment Successful
@@ -357,8 +357,8 @@ function approveRequest(requestId) {
     
     if (!request) return;
     
-    // Show Stripe modal
-    showStripeModal(request);
+    // Show CashApp payment modal
+    showCashAppModal(request);
 }
 
 function deleteRequest(requestId) {
@@ -406,59 +406,53 @@ function markCompleted(requestId) {
     showNotification('Request marked as completed!');
 }
 
-function showStripeModal(request) {
-    const modal = document.getElementById('stripe-modal');
-    const customerSpan = document.getElementById('stripe-customer');
-    const amountSpan = document.getElementById('stripe-amount');
+function showCashAppModal(request) {
+    const modal = document.getElementById('cashapp-modal');
+    const customerSpan = document.getElementById('cashapp-customer');
+    const amountSpan = document.getElementById('cashapp-amount');
+    const amountDisplaySpan = document.getElementById('cashapp-amount-display');
     
     customerSpan.textContent = `${request.name || 'Customer'} (${request.email})`;
     amountSpan.textContent = request.total_price;
+    amountDisplaySpan.textContent = request.total_price;
     
     modal.style.display = 'flex';
     modal.dataset.requestId = request.id;
 }
 
-function closeStripeModal() {
-    document.getElementById('stripe-modal').style.display = 'none';
-    document.getElementById('stripe-link').value = '';
+function closeCashAppModal() {
+    document.getElementById('cashapp-modal').style.display = 'none';
 }
 
-function sendStripeLink() {
-    const modal = document.getElementById('stripe-modal');
-    const stripeLink = document.getElementById('stripe-link').value;
+function sendCashAppDetails() {
+    const modal = document.getElementById('cashapp-modal');
     const requestId = modal.dataset.requestId;
     
-    if (!stripeLink || !stripeLink.startsWith('https://')) {
-        alert('Please enter a valid Stripe payment link');
-        return;
-    }
-    
-    // Update request status
+    // Update request status to show payment details were sent
     const submissions = JSON.parse(localStorage.getItem('photoEditSubmissions') || '[]');
     const request = submissions.find(s => s.id === requestId);
     
     if (request) {
-        request.status = 'in-progress';
-        request.stripe_link = stripeLink;
+        request.payment_details_sent = true;
         request.approved_date = new Date().toISOString();
         
         localStorage.setItem('photoEditSubmissions', JSON.stringify(submissions));
         
         // Show email template
-        showEmailTemplate(request, stripeLink);
+        showEmailTemplate(request);
         
-        closeStripeModal();
+        closeCashAppModal();
         loadDashboardData();
         
-        showNotification('Stripe link saved! Email template is ready to send.');
+        showNotification('Payment details ready! Email template is prepared.');
     }
 }
 
-function showEmailTemplate(request, stripeLink) {
+function showEmailTemplate(request) {
     const modal = document.getElementById('email-modal');
     const template = document.getElementById('email-template');
     
-    const emailContent = `Subject: Your Photo Edit Request - Payment Link
+    const emailContent = `Subject: Your Photo Edit Request - Payment Details
 
 Dear ${request.name || 'Customer'},
 
@@ -469,10 +463,15 @@ Request Details:
 - Instructions: ${request.instructions}
 - Total Amount: ${request.total_price}
 
-To proceed with your photo edit, please complete payment using the secure link below:
-${stripeLink}
+To proceed with your photo edit, please send payment via CashApp:
 
-Once payment is confirmed, we'll begin editing your photo and deliver the final result within ${request.rush_order ? '12 hours' : '24-48 hours'}.
+💰 CashApp Handle: ${CASHAPP_HANDLE}
+💵 Amount: ${request.total_price}
+📝 Note: Include "Photo Edit #${request.id.split('_')[1]}" in the payment note
+
+Once payment is received, we'll begin editing your photo and deliver the final result within 24-48 hours.
+
+Please reply to this email with a screenshot of your payment confirmation for faster processing.
 
 If you have any questions, please don't hesitate to contact us.
 

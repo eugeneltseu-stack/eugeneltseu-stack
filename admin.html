@@ -94,6 +94,16 @@
                 </div>
             </div>
 
+            <!-- CashApp Configuration Notice -->
+            <div class="cashapp-config-notice">
+                <div class="config-content">
+                    <h4>⚠️ CashApp Configuration Required</h4>
+                    <p>Before processing payments, update your CashApp handle in the admin.js file:</p>
+                    <code>const CASHAPP_HANDLE = '$YourCashAppHandle';</code>
+                    <p>Replace <strong>$YourCashAppHandle</strong> with your actual CashApp handle (e.g., $johndoe123)</p>
+                </div>
+            </div>
+
             <!-- Tabs -->
             <div class="admin-tabs">
                 <button class="tab-button active" onclick="showTab('pending')">Pending Requests</button>
@@ -130,10 +140,13 @@
                             </div>
                             <div class="request-actions">
                                 <button class="approve-button" onclick="approveRequest('sample-1')">
-                                    Send Stripe Link
+                                    Send Payment Details
                                 </button>
-                                <button class="reject-button" onclick="rejectRequest('sample-1')">
-                                    Reject
+                                <button class="success-button" onclick="markPaymentSuccessful('sample-1')">
+                                    Payment Successful
+                                </button>
+                                <button class="delete-button" onclick="deleteRequest('sample-1')">
+                                    Delete Request
                                 </button>
                             </div>
                         </div>
@@ -181,29 +194,33 @@
             </div>
         </div>
 
-        <!-- Stripe Link Modal -->
-        <div id="stripe-modal" class="modal" style="display: none;">
+        <!-- CashApp Payment Modal -->
+        <div id="cashapp-modal" class="modal" style="display: none;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Send Stripe Payment Link</h3>
-                    <button class="close-button" onclick="closeStripeModal()">&times;</button>
+                    <h3>Send CashApp Payment Details</h3>
+                    <button class="close-button" onclick="closeCashAppModal()">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>Generate and send a Stripe payment link for this request:</p>
-                    <div class="stripe-details">
-                        <p><strong>Customer:</strong> <span id="stripe-customer"></span></p>
-                        <p><strong>Amount:</strong> <span id="stripe-amount"></span></p>
-                        <p><strong>Description:</strong> Photo editing service</p>
+                    <p>Send CashApp payment details for this request:</p>
+                    <div class="cashapp-details">
+                        <p><strong>Customer:</strong> <span id="cashapp-customer"></span></p>
+                        <p><strong>Amount:</strong> <span id="cashapp-amount"></span></p>
+                        <p><strong>Payment Method:</strong> CashApp</p>
                     </div>
-                    <div class="form-group">
-                        <label for="stripe-link">Stripe Payment Link</label>
-                        <input type="url" id="stripe-link" placeholder="https://buy.stripe.com/..." required>
-                        <small>Create a payment link in your Stripe dashboard and paste it here</small>
+                    <div class="cashapp-info">
+                        <h4>Payment Instructions:</h4>
+                        <div class="payment-details">
+                            <p>💰 <strong>CashApp Handle:</strong> <code>$YourCashAppHandle</code></p>
+                            <p>💵 <strong>Amount:</strong> <span id="cashapp-amount-display"></span></p>
+                            <p>📝 <strong>Payment Note:</strong> Include request ID in payment note</p>
+                        </div>
+                        <p class="note">⚠️ <strong>Remember:</strong> Update your CashApp handle in the admin.js file!</p>
                     </div>
                 </div>
                 <div class="modal-actions">
-                    <button class="secondary-button" onclick="closeStripeModal()">Cancel</button>
-                    <button class="submit-button" onclick="sendStripeLink()">Send Link</button>
+                    <button class="secondary-button" onclick="closeCashAppModal()">Cancel</button>
+                    <button class="submit-button" onclick="sendCashAppDetails()">Generate Email</button>
                 </div>
             </div>
         </div>

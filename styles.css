@@ -305,6 +305,64 @@ body {
     gap: 1rem;
 }
 
+/* AI Limitations Notice */
+.ai-limitations-notice {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.limitations-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.limitations-section h4 {
+    color: #1e293b;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.limitations-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.limitations-section li {
+    color: #475569;
+    padding: 0.4rem 0;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.limitations-section li:last-child {
+    border-bottom: none;
+}
+
+.limitations-tip {
+    background: #dbeafe;
+    border: 1px solid #3b82f6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0;
+    color: #1e40af;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .limitations-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
 /* AI Technology Section */
 .ai-technology {
     padding: 80px 0;
@@ -388,6 +446,76 @@ body {
 .ai-feature p {
     color: #cbd5e1;
     line-height: 1.6;
+}
+
+/* AI Capabilities Section */
+.ai-capabilities {
+    margin: 3rem 0;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.capabilities-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.capability-section {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.capability-section.excellent {
+    border-left: 4px solid #10b981;
+}
+
+.capability-section.limitations {
+    border-left: 4px solid #f59e0b;
+}
+
+.capability-section h3 {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.capability-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.capability-section li {
+    color: #cbd5e1;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+}
+
+.capability-section li:last-child {
+    border-bottom: none;
+}
+
+.limitation-note {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    color: #fbbf24;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .capabilities-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
 }
 
 .ai-tech-cta {
@@ -1178,11 +1306,86 @@ body {
     border-top: 1px solid #e2e8f0;
 }
 
-.stripe-details {
+.cashapp-details {
     background: #f8fafc;
     padding: 1rem;
     border-radius: 8px;
     margin-bottom: 1rem;
+}
+
+.cashapp-info {
+    background: #ecfdf5;
+    border: 1px solid #10b981;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.cashapp-info h4 {
+    color: #065f46;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.payment-details {
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 0.75rem 0;
+}
+
+.payment-details p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.payment-details code {
+    background: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    color: #059669;
+    font-weight: bold;
+}
+
+.cashapp-info .note {
+    font-size: 0.85rem;
+    color: #d97706;
+    margin-top: 0.75rem;
+    font-style: italic;
+}
+
+/* CashApp Configuration Notice */
+.cashapp-config-notice {
+    background: #fef3c7;
+    border: 2px solid #f59e0b;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1.5rem 0;
+}
+
+.config-content h4 {
+    color: #92400e;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.config-content p {
+    color: #78350f;
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.config-content code {
+    background: #fbbf24;
+    color: #78350f;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    display: block;
+    margin: 0.5rem 0;
+    text-align: center;
 }
 
 .copy-button {
