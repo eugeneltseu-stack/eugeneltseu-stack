@@ -2,6 +2,8 @@
 
 A clean, modern static website for a $1 photo editing service. Built with HTML, CSS, and JavaScript, designed to be hosted on GitHub Pages.
 
+🌐 **Live Website**: https://eugeneltseu-stack.github.io/eugeneltseu-stack/
+
 ## Features
 
 - **Clean, Modern Design**: Blue and white color scheme with smooth animations
