@@ -38,10 +38,30 @@ body {
     height: 70px;
 }
 
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-icon {
+    background: #2563eb;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
 .nav-logo h2 {
     color: #2563eb;
     font-weight: 700;
     font-size: 1.5rem;
+    margin: 0;
 }
 
 .nav-menu {
@@ -148,6 +168,99 @@ body {
     box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
 
+.cta-button.secondary {
+    background: #f8fafc;
+    color: #2563eb;
+    border: 2px solid #2563eb;
+}
+
+.cta-button.secondary:hover {
+    background: #2563eb;
+    color: white;
+}
+
+/* AI Badge and Features */
+.ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    border: 1px solid #bfdbfe;
+}
+
+.qwen-logo svg {
+    width: 20px;
+    height: 20px;
+}
+
+.hero-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 2rem 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+.feature-icon {
+    font-size: 1.2rem;
+}
+
+/* AI Processing Demo */
+.ai-processing-demo {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.demo-header {
+    margin-bottom: 1rem;
+}
+
+.qwen-branding {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.qwen-icon {
+    background: #2563eb;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.processing-text {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
 .hero-image {
     display: flex;
     justify-content: center;
@@ -190,6 +303,103 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+/* AI Technology Section */
+.ai-technology {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: white;
+}
+
+.ai-tech-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.ai-tech-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.qwen-logo-large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.qwen-icon-large {
+    background: #2563eb;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+}
+
+.qwen-text h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.qwen-text p {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+}
+
+.ai-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.ai-feature {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.ai-feature h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.ai-feature p {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.ai-tech-cta {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-tech-cta p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: #e2e8f0;
 }
 
 /* How It Works Section */
