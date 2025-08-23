@@ -1548,6 +1548,24 @@ body {
     font-size: 0.875rem;
 }
 
+/* Payment Screenshot Modal Styles */
+.payment-screenshot-container {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.payment-screenshot-info {
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.payment-screenshot-info p {
+    margin: 0.5rem 0;
+    color: #64748b;
+}
+
 .copy-button {
     background: #2563eb;
     color: white;

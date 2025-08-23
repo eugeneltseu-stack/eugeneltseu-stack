@@ -4,13 +4,13 @@
 window.PhotoEditConfig = {
     // Site Information
     siteName: "PhotoEdit Pro",
-    tagline: "Get Your Photos Edited – $1 per image",
+    tagline: "Get Your Photos Edited – $25 per image",
     supportEmail: "support@photoeditpro.com",
     
     // Pricing
-    basePrice: 1.00,
-    rushOrderPrice: 2.00,
-    highResPrice: 1.00,
+    basePrice: 25.00,
+    rushOrderPrice: 50.00,
+    highResPrice: 25.00,
     
     // Form Configuration
     formspreeEndpoint: "https://formspree.io/f/YOUR_FORM_ID", // Replace with your Formspree form ID
@@ -73,7 +73,7 @@ window.PhotoEditConfig = {
         },
         {
             question: "Can I request multiple edits?",
-            answer: "Each image is $1. For multiple images, please submit separate requests or contact us for bulk pricing."
+            answer: "Each image is $25. For multiple images, please submit separate requests or contact us for bulk pricing."
         }
     ],
     
@@ -97,7 +97,7 @@ window.PhotoEditConfig = {
         {
             number: 4,
             title: "Pay via Stripe",
-            description: "Receive a secure payment link via email - only $1 per image"
+            description: "Receive a secure payment link via email - only $25 per image"
         },
         {
             number: 5,

@@ -135,7 +135,7 @@
                                 <p><strong>Email:</strong> sample@email.com</p>
                                 <p><strong>Name:</strong> John Doe</p>
                                 <p><strong>Instructions:</strong> Remove background and make it white, brighten the image</p>
-                                <p><strong>Payment Status:</strong> <span class="status-paid">✅ Paid ($1.00)</span></p>
+                                <p><strong>Payment Status:</strong> <span class="status-paid">✅ Paid ($25.00)</span></p>
                                 <p><strong>Payment Confirmation:</strong> <a href="#" onclick="viewPaymentConfirmation('sample-1')">View Screenshot</a></p>
                             </div>
                             <div class="request-actions">
@@ -237,6 +237,29 @@
                 </div>
                 <div class="modal-actions">
                     <button class="submit-button" onclick="closeEmailModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Confirmation Modal -->
+        <div id="payment-confirmation-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Payment Confirmation Screenshot</h3>
+                    <button class="close-button" onclick="closePaymentConfirmationModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="payment-screenshot-container">
+                        <img id="payment-screenshot" src="" alt="Payment Confirmation Screenshot" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    </div>
+                    <div class="payment-screenshot-info">
+                        <p><strong>File Name:</strong> <span id="payment-file-name"></span></p>
+                        <p><strong>File Size:</strong> <span id="payment-file-size"></span></p>
+                        <p><strong>Upload Date:</strong> <span id="payment-upload-date"></span></p>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="submit-button" onclick="closePaymentConfirmationModal()">Close</button>
                 </div>
             </div>
         </div>

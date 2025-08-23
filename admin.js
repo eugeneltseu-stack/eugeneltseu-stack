@@ -289,11 +289,8 @@ function createRequestCard(request, status) {
     if (status === 'pending') {
         actions = `
             <div class="request-actions">
-                <button class="approve-button" onclick="approveRequest('${request.id}')">
-                    Send Payment Details
-                </button>
-                <button class="success-button" onclick="markPaymentSuccessful('${request.id}')">
-                    Payment Successful
+                <button class="approve-button" onclick="startProcessing('${request.id}')">
+                    Start Processing
                 </button>
                 <button class="delete-button" onclick="deleteRequest('${request.id}')">
                     Delete Request
@@ -342,7 +339,8 @@ function createRequestCard(request, status) {
                     <p><strong>Email:</strong> ${request.email}</p>
                     <p><strong>Name:</strong> ${request.name || 'Not provided'}</p>
                     <p><strong>Instructions:</strong> ${request.instructions}</p>
-                    <p><strong>Total:</strong> ${request.total_price}</p>
+                    <p><strong>Payment Status:</strong> <span class="status-paid">✅ Paid (${request.total_price})</span></p>
+                    ${request.payment_file_data ? `<p><strong>Payment Confirmation:</strong> <a href="#" onclick="viewPaymentConfirmation('${request.id}')">View Screenshot</a></p>` : ''}
                     ${request.file_name ? `<p><strong>File:</strong> ${request.file_name} (${formatFileSize(request.file_size)})</p>` : ''}
                 </div>
                 ${actions}
@@ -676,6 +674,52 @@ function closeImageModal() {
     if (modal) {
         modal.style.display = 'none';
     }
+}
+
+// Payment confirmation functions
+function viewPaymentConfirmation(requestId) {
+    const submissions = JSON.parse(localStorage.getItem('photoEditSubmissions') || '[]');
+    const request = submissions.find(s => s.id === requestId);
+    
+    if (!request || !request.payment_file_data) {
+        showNotification('No payment confirmation found for this request', 'error');
+        return;
+    }
+    
+    const modal = document.getElementById('payment-confirmation-modal');
+    const screenshot = document.getElementById('payment-screenshot');
+    const fileName = document.getElementById('payment-file-name');
+    const fileSize = document.getElementById('payment-file-size');
+    const uploadDate = document.getElementById('payment-upload-date');
+    
+    screenshot.src = request.payment_file_data;
+    fileName.textContent = request.payment_file_name || 'payment_confirmation.png';
+    fileSize.textContent = formatFileSize(request.payment_file_size);
+    uploadDate.textContent = new Date(request.submission_date).toLocaleString();
+    
+    modal.style.display = 'flex';
+}
+
+function closePaymentConfirmationModal() {
+    const modal = document.getElementById('payment-confirmation-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function startProcessing(requestId) {
+    const submissions = JSON.parse(localStorage.getItem('photoEditSubmissions') || '[]');
+    const request = submissions.find(s => s.id === requestId);
+    
+    if (!request) return;
+    
+    request.status = 'in-progress';
+    request.processing_started = new Date().toISOString();
+    
+    localStorage.setItem('photoEditSubmissions', JSON.stringify(submissions));
+    loadDashboardData();
+    
+    showNotification('Request moved to processing!');
 }
 
 // Demo data for testing (remove in production)

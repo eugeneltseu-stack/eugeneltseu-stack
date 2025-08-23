@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
             payment_file_name: selectedPaymentFile ? selectedPaymentFile.name : '',
             payment_file_size: selectedPaymentFile ? selectedPaymentFile.size : 0,
             payment_file_type: selectedPaymentFile ? selectedPaymentFile.type : '',
-            total_price: '$1.00',
+            total_price: '$25.00',
             submission_date: new Date().toISOString(),
             status: 'pending',
             payment_status: 'paid' // Since payment confirmation is uploaded
